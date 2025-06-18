@@ -1,0 +1,45 @@
+﻿@model PetsAlone.Core.My_Pet_Class
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2 class="my-4">Report Missing Pet</h2>
+
+<form asp-action="Create" method="post" class="mb-4">
+    @Html.AntiForgeryToken()
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="PetType" class="form-label"></label>
+            <select asp-for="PetType" asp-items="@(ViewBag.PetTypes as List<SelectListItem>)" class="form-select"></select>
+            <span asp-validation-for="PetType" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <label asp-for="MissingSince" class="form-label"></label>
+            <input asp-for="MissingSince" type="date" class="form-control" />
+            <span asp-validation-for="MissingSince" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

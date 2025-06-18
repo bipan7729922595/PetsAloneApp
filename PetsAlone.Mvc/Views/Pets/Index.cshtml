@@ -1,0 +1,72 @@
+﻿@model List<PetsAlone.Core.My_Pet_Class>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-center">
+        <h1 class="display-4">Hello, @User.Identity.Name!</h1>
+    </div>
+}
+<h2 class="my-4">Missing Pets</h2>
+
+<form method="get" class="mb-4">
+    <div class="row justify-content-start align-items-center">
+        <div class="col-md-3">
+            <label for="petType" class="form-label">Filter by Pet Type:</label>
+            <select name="petType" id="petType" class="form-select" onchange="this.form.submit()">
+                <option value="">All</option>
+                @foreach (var type in (List<SelectListItem>)ViewBag.PetTypes)
+                {
+                    @if (ViewBag.SelectedPetType == type.Value)
+                    {
+                        <option value="@type.Value" selected="selected">@type.Text</option>
+                    }
+                    else
+                    {
+                        <option value="@type.Value">@type.Text</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Missing Since</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pet in Model)
+        {
+            <tr>
+                <td>@pet.Name</td>
+                <td>
+                    @foreach (var petType in (List<SelectListItem>)ViewBag.PetTypes)
+                    {
+                        @if (petType.Value == pet.PetType.ToString())
+                        {
+                            @petType.Text
+                        }
+                    }
+                </td>
+                <td>@pet.MissingSince.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="my-4">
+        <a class="btn btn-primary" asp-controller="Pets" asp-action="Create">Report Missing Pet</a>
+    </div>
+}
+
+

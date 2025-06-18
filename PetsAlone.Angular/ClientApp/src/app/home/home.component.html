@@ -1,0 +1,19 @@
+<h1>Hello</h1>
+
+<h1>Missing Pets</h1>
+
+<label>Filter by Pet Type:</label>
+<select [(ngModel)]="selectedPetType" (change)="getPets(selectedPetType)">
+  <option [value]="null">All</option>
+  <option *ngFor="let type of petTypes" [value]="type.value">
+    {{ type.text }}
+  </option>
+</select>
+
+<ul *ngIf="pets.length > 0">
+  <li *ngFor="let pet of pets">
+    <strong>{{ pet.name }}</strong> ({{ pet.petType }}) – Missing since: {{ pet.missingSince | date }}
+  </li>
+</ul>
+
+<p *ngIf="pets.length === 0">No pets found.</p>

@@ -1,0 +1,22 @@
+<h2>Report Missing Pet</h2>
+
+<form (ngSubmit)="onSubmit()" #petForm="ngForm">
+  <div>
+    <label>Name:</label>
+    <input [(ngModel)]="pet.name" name="name" required />
+  </div>
+
+  <div>
+    <label>Pet Type:</label>
+    <select [(ngModel)]="pet.petType" name="petType" required>
+      <option *ngFor="let type of petTypes" [value]="type.value">{{ type.text }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Missing Since:</label>
+    <input type="date" [(ngModel)]="pet.missingSince" name="missingSince" required />
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
