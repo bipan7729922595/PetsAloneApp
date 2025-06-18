@@ -16,14 +16,6 @@ namespace PetsAlone.Angular.Controllers
             _petsDbContext = petsDbContext;
         }
 
-        //[HttpGet("all")]
-        //public object GetAll()
-        //{
-        //    var petsService = new PetsService();
-        //    var result = petsService.GetAll(_petsDbContext);
-        //    return result;
-        //}
-
         [HttpGet("all")]
         public object GetAll([FromQuery] int? petType)
         {
