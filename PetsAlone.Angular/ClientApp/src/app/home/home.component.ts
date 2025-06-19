@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
       params = params.set('petType', petType.toString());
     }
 
-    this.http.get<any>('api/pets/all', { params }).subscribe(data => {
+    this.http.get<any>('http://localhost:27544/api/pets/all', { params }).subscribe(data => {
       this.pets = data.pets;
       this.petTypes = data.petTypes;
       this.selectedPetType = data.selectedPetType;
