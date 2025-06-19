@@ -8,9 +8,12 @@
 
   <div>
     <label>Pet Type:</label>
-    <select [(ngModel)]="pet.petType" name="petType" required>
-      <option *ngFor="let type of petTypes" [value]="type.value">{{ type.text }}</option>
-    </select>
+    
+<select [(ngModel)]="pet.petType" name="petType" required>
+  <option [ngValue]="null"> Select Pet Type </option>
+  <option *ngFor="let type of petTypes" [ngValue]="type.value">{{ type.text }}</option>
+</select>
+
   </div>
 
   <div>
