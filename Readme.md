@@ -40,3 +40,49 @@ Password: MontanaMax!!
 
 ### Running the app
 Ensure you have .net core 3.1 installed on your machine. If you're using Visual Studio 2019 then set one of the web projects as the startup project and hit run.
+
+### **Project Design Overview**
+1. Frontend: Angular Application
+a. Structure
+·	Feature Module: create-pet
+·	Component: CreatePetComponent
+·	Handles the UI and user interactions for creating a new pet.
+·	Uses a form to collect pet details from the user.
+·	Service: PetService
+·	Handles HTTP communication with the backend API for pet-related operations.
+b. PetService Responsibilities
+·	getAllPets(petType?: number):
+·	Fetches a list of all pets, optionally filtered by pet type.
+·	Sends a GET request to /api/pets/all with optional query parameters.
+·	createPet(pet: any):
+·	Sends a POST request to /api/pets/create to add a new pet.
+·	Intended to include an authorization token in the header (currently commented out).
+c. Authentication
+·	The service retrieves a token from localStorage (key: currentUser) for authenticated requests.
+·	The code for adding the Authorization header is present but commented out.
+
+2. Backend: .NET Core 3.1 API
+·	API Endpoints:
+·	GET /api/pets/all — Returns all pets, supports filtering by type.
+·	POST /api/pets/create — Creates a new pet entry.
+·	Authentication:
+·	Expected to use JWT Bearer tokens for protected endpoints (as inferred from the commented code).
+
+3. Data Flow
+1.	User Action: User fills out the pet creation form in the Angular app.
+2.	Component Logic: CreatePetComponent collects form data and calls PetService.createPet().
+3.	Service Call: PetService sends a POST request to the backend API.
+4.	Backend Processing: .NET Core API receives the request, authenticates (if required), and processes the pet creation.
+5.	Response: API returns a success or error response, which is handled by the Angular component.
+
+[User] 
+  | 
+  v
+[CreatePetComponent] --(createPet)--> [PetService] --(POST)--> [API: /api/pets/create]
+  ^
+  |
+[HomeComponent] --(getAllPets)--> [PetService] --(GET)--> [API: /api/pets/all]
+
+4. Security Considerations
+·	Token Handling: The token should be included in the Authorization header for protected API calls.
+·	CORS: The backend should allow requests from the Angular frontend origin.
