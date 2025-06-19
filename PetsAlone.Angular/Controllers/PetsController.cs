@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetsAlone.Core;
 using System;
@@ -22,10 +22,7 @@ namespace PetsAlone.Angular.Controllers
             var petsService = new PetsService();
             var result = petsService.GetAll(_petsDbContext);
 
-            if (petType.HasValue)
-            {
-                result = result.Where(p => (int)p.PetType == petType.Value).ToList();
-            }
+            result = result.Where(p => p.PetType.HasValue && (int)p.PetType == petType.Value).ToList();
 
             result = result.OrderByDescending(p => p.MissingSince).ToList();
 
@@ -48,7 +45,7 @@ namespace PetsAlone.Angular.Controllers
 
         [HttpPost("create")]
         [Authorize]
-        public IActionResult Create([FromBody] My_Pet_Class pet)
+        public IActionResult Create(My_Pet_Class pet)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
