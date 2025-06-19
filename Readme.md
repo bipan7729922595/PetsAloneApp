@@ -42,6 +42,7 @@ Password: MontanaMax!!
 Ensure you have .net core 3.1 installed on your machine. If you're using Visual Studio 2019 then set one of the web projects as the startup project and hit run.
 
 ### **Project Design Overview**
+Project Design Overview
 1. Frontend: Angular Application
 a. Structure
 ·	Feature Module: create-pet
@@ -75,14 +76,15 @@ c. Authentication
 4.	Backend Processing: .NET Core API receives the request, authenticates (if required), and processes the pet creation.
 5.	Response: API returns a success or error response, which is handled by the Angular component.
 
-[User] 
-  | 
-  v
-[CreatePetComponent] --(createPet)--> [PetService] --(POST)--> [API: /api/pets/create]
-  ^
-  |
-[HomeComponent] --(getAllPets)--> [PetService] --(GET)--> [API: /api/pets/all]
+	[User] 
+  	| 
+ 	 v
+	[CreatePetComponent] --(createPet)--> [PetService] --(POST)--> [API: /api/pets/create]
+  	^
+  	|
+	[HomeComponent] --(getAllPets)--> [PetService] --(GET)--> [API: /api/pets/all]
 
 4. Security Considerations
 ·	Token Handling: The token should be included in the Authorization header for protected API calls.
 ·	CORS: The backend should allow requests from the Angular frontend origin.
+
