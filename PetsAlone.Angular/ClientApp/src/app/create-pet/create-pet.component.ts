@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './create-pet.component.html'
 })
 export class CreatePetComponent implements OnInit {
-  pet = { name: '', petType: null, missingSince: '' };
+  pet = { name: '', petType: null, missingSince: new Date().toISOString().split('T')[0] };
   petTypes: any[] = [];
 
   constructor(private petService: PetService, private router: Router) { }
@@ -18,7 +18,7 @@ export class CreatePetComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit() {console.log(this.pet)
     this.petService.createPet(this.pet).subscribe(() => {
       this.router.navigate(['/home']);
     });
