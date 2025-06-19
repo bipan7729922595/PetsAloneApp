@@ -43,32 +43,34 @@ Ensure you have .net core 3.1 installed on your machine. If you're using Visual 
 
 ### **Project Design Overview**
 1. Frontend: Angular Application
--Structure
---Feature Module: create-pet
---Component: CreatePetComponent
---Handles the UI and user interactions for creating a new pet.
---Uses a form to collect pet details from the user.
---Service: PetService
---Handles HTTP communication with the backend API for pet-related operations.
--PetService Responsibilities
---getAllPets(petType?: number):
---Fetches a list of all pets, optionally filtered by pet type.
---Sends a GET request to /api/pets/all with optional query parameters.
---createPet(pet: any):
---Sends a POST request to /api/pets/create to add a new pet.
---Intended to include an authorization token in the header (currently commented out).
--Authentication
---The service retrieves a token from localStorage (key: currentUser) for authenticated requests.
---The code for adding the Authorization header is present but commented out.
+-->  Structure
+  --Feature Module: create-pet
+  --Component: CreatePetComponent
+  --Handles the UI and user interactions for creating a new pet.
+  --Uses a form to collect pet details from the user.
+  --Service: PetService
+  --Handles HTTP communication with the backend API for pet-related operations.
+   
+-->  PetService Responsibilities
+  --getAllPets(petType?: number):
+  --Fetches a list of all pets, optionally filtered by pet type.
+  --Sends a GET request to /api/pets/all with optional query parameters.
+  --createPet(pet: any):
+  --Sends a POST request to /api/pets/create to add a new pet.
+  --Intended to include an authorization token in the header (currently commented out).
 
-2. Backend: .NET Core 3.1 API
+-->  Authentication
+  --The service retrieves a token from localStorage (key: currentUser) for authenticated requests.
+  --The code for adding the Authorization header is present but commented out.
+
+3. Backend: .NET Core 3.1 API
 API Endpoints:
 GET /api/pets/all — Returns all pets, supports filtering by type.
 POST /api/pets/create — Creates a new pet entry.
 Authentication:
 Expected to use JWT Bearer tokens for protected endpoints (as inferred from the commented code).
 
-3. Data Flow
+4. Data Flow
 -User Action: User fills out the pet creation form in the Angular app.
 -Component Logic: CreatePetComponent collects form data and calls PetService.createPet().
 -Service Call: PetService sends a POST request to the backend API.
@@ -84,7 +86,7 @@ Expected to use JWT Bearer tokens for protected endpoints (as inferred from the 
 [HomeComponent] --(getAllPets)--> [PetService] --(GET)--> [API: /api/pets/all]
 
 4. Security Considerations
--Token Handling: The token should be included in the Authorization header for protected API calls.
--CORS: The backend should allow requests from the Angular frontend origin.
+  -Token Handling: The token should be included in the Authorization header for protected API calls.
+  -CORS: The backend should allow requests from the Angular frontend origin.
 
 
