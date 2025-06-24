@@ -12,10 +12,10 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('currentUser');
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('jwt');
+    return !!localStorage.getItem('currentUser');
   }
 }
