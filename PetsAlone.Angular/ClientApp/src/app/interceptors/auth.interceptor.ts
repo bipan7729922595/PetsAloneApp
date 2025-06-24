@@ -1,32 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 
-@Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-})
+import { Injectable } from '@angular/core';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-export class HomeComponent implements OnInit {
-  pets: any[] = [];
-  petTypes: any[] = [];
-  selectedPetType: number | null = null;
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = localStorage.getItem('currentUser');
 
-  constructor(private http: HttpClient) { }
+    if (token) {
+      const clonedRequest = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`)
+      });
+      return next.handle(clonedRequest);
+    }
 
-  ngOnInit() {
-    this.getPets();
-  }
-
-  getPets(petType?: number) {
-    let params = new HttpParams();
-    if (petType != null) {
-      params = params.set('petType', petType.toString());
-    }
-
-    this.http.get<any>('http://localhost:27544/api/pets/all', { params }).subscribe(data => {
-      this.pets = data.pets;
-      this.petTypes = data.petTypes;
-      this.selectedPetType = data.selectedPetType;
-    });
-  }
+    return next.handle(req);
+  }
 }
